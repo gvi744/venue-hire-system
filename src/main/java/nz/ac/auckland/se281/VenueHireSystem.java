@@ -26,19 +26,20 @@ public class VenueHireSystem {
     this.venueCode = venueCode;
     this.capacity = Integer.parseInt(capacityInput);
     this.hireFee = Integer.parseInt(hireFeeInput);
-    codeList.add(venueCode);
 
     if (venueName.isEmpty()) {
       System.out.println("Venue not created: venue name cannot be empty.");
     } else if (codeList.contains(venueCode)) {
       System.out.println(
           "Venue not created: code'" + venueCode + "' is already used for '" + venueName + "'.");
-    } else if (hireFeeInput.matches("\\d+")) {
+    } else if (!hireFeeInput.matches("\\d+")) {
       System.out.println("Venue not created: hire fee must be a number.");
     } else if (this.capacity < 0) {
       System.out.println("Venue not created: capacity must be a positive number.");
     } else {
-      System.out.println("Successfully created venue " + venueName + " " + venueCode + ".");
+      codeList.add(venueCode);
+      System.out.println(
+          "Successfully created venue '" + this.venueName + "' (" + this.venueCode + ").");
     }
   }
 
