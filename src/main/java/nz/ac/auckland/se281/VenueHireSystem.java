@@ -25,21 +25,37 @@ public class VenueHireSystem {
     this.venueName = venueName;
     this.venueCode = venueCode;
     this.capacity = Integer.parseInt(capacityInput);
-    this.hireFee = Integer.parseInt(hireFeeInput);
+    int hireFee;
 
     if (venueName.isEmpty()) {
-      System.out.println("Venue not created: venue name cannot be empty.");
+      System.out.println("Venue not created: venue name must not be empty.");
     } else if (codeList.contains(venueCode)) {
       System.out.println(
-          "Venue not created: code'" + venueCode + "' is already used for '" + venueName + "'.");
-    } else if (!hireFeeInput.matches("\\d+")) {
-      System.out.println("Venue not created: hire fee must be a number.");
+          "Venue not created: code '" + venueCode + "' is already used for '" + venueName + "'.");
     } else if (this.capacity < 0) {
       System.out.println("Venue not created: capacity must be a positive number.");
     } else {
+      if (!isInteger(hireFeeInput)) {
+        System.out.println("Venue not created: hire fee must be a number.");
+        return;
+      }
+      if (Integer.parseInt(hireFeeInput) == 0) {
+        System.out.println("Venue not created: hire fee must be a positive number.");
+        return;
+      }
       codeList.add(venueCode);
+      hireFee = Integer.parseInt(hireFeeInput);
       System.out.println(
           "Successfully created venue '" + this.venueName + "' (" + this.venueCode + ").");
+    }
+  }
+
+  public boolean isInteger(String input) {
+    try {
+      Integer.parseInt(input);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
     }
   }
 
