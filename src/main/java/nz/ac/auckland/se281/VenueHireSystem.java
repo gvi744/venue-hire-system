@@ -1,11 +1,18 @@
 package nz.ac.auckland.se281;
 
+// Manually added arrayList functionality
+import java.util.ArrayList;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
 
-  // declare fields
+  // Declare instance variables
+  private String venueName;
+  private String venueCode;
+  private int capacity;
+  private int hireFee;
+  private ArrayList<String> codeList = new ArrayList<String>();
 
   public VenueHireSystem() {}
 
@@ -15,7 +22,24 @@ public class VenueHireSystem {
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    // TODO implement this method
+    this.venueName = venueName;
+    this.venueCode = venueCode;
+    this.capacity = Integer.parseInt(capacityInput);
+    this.hireFee = Integer.parseInt(hireFeeInput);
+    codeList.add(venueCode);
+
+    if (venueName.isEmpty()) {
+      System.out.println("Venue not created: venue name cannot be empty.");
+    } else if (codeList.contains(venueCode)) {
+      System.out.println(
+          "Venue not created: code'" + venueCode + "' is already used for '" + venueName + "'.");
+    } else if (hireFeeInput.matches("\\d+")) {
+      System.out.println("Venue not created: hire fee must be a number.");
+    } else if (this.capacity < 0) {
+      System.out.println("Venue not created: capacity must be a positive number.");
+    } else {
+      System.out.println("Successfully created venue " + venueName + " " + venueCode + ".");
+    }
   }
 
   public void setSystemDate(String dateInput) {
