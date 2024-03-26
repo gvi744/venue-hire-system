@@ -17,7 +17,7 @@ public class VenueHireSystem {
   public VenueHireSystem() {}
 
   public void printVenues() {
-    System.out.println("There are no venues in the system. Please create a venue first.");
+    MessageCli.NO_VENUES.printMessage();
   }
 
   public void createVenue(
@@ -28,25 +28,23 @@ public class VenueHireSystem {
     int hireFee;
 
     if (venueName.isEmpty()) {
-      System.out.println("Venue not created: venue name must not be empty.");
+      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
     } else if (codeList.contains(venueCode)) {
-      System.out.println(
-          "Venue not created: code '" + venueCode + "' is already used for '" + venueName + "'.");
+      MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venueName);
     } else if (this.capacity < 0) {
-      System.out.println("Venue not created: capacity must be a positive number.");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
     } else {
       if (!isInteger(hireFeeInput)) {
-        System.out.println("Venue not created: hire fee must be a number.");
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
         return;
       }
       if (Integer.parseInt(hireFeeInput) == 0) {
-        System.out.println("Venue not created: hire fee must be a positive number.");
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
         return;
       }
       codeList.add(venueCode);
       hireFee = Integer.parseInt(hireFeeInput);
-      System.out.println(
-          "Successfully created venue '" + this.venueName + "' (" + this.venueCode + ").");
+      MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(this.venueName, this.venueCode);
     }
   }
 
