@@ -18,43 +18,63 @@ public class VenueHireSystem {
   public VenueHireSystem() {}
 
   public void printVenues() {
-    if (codeList.size() == 0) {
+    if (codeList.size() <= 0) {
       MessageCli.NO_VENUES.printMessage();
-    } else if (codeList.size() == 1) {
+    } else if (venueList.size() == 1) {
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-      MessageCli.VENUE_ENTRY.printMessage(
-          venueName, venueCode, Integer.toString(capacity), Integer.toString(hireFee));
+      for (Venue venue : venueList) {
+        MessageCli.VENUE_ENTRY.printMessage(
+            venue.getName(),
+            venue.getCode(),
+            Integer.toString(venue.getCapacity()),
+            Integer.toString(venue.getHireFee()));
+      }
     } else if (codeList.size() > 1 && codeList.size() < 10) {
       MessageCli.NUMBER_VENUES.printMessage("are", NumberToWord(codeList.size()), "s");
-      for (int i = 0; i < codeList.size(); i++) {
-        MessageCli.VENUE_ENTRY.printMessage(
-            venueName, venueCode, Integer.toString(capacity), Integer.toString(hireFee));
-      }
     } else {
       MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(codeList.size()), "s");
-      for (String venueCode : codeList) {
-        MessageCli.VENUE_ENTRY.printMessage(
-            this.venueName,
-            this.venueCode,
-            Integer.toString(this.capacity),
-            Integer.toString(this.hireFee));
-      }
+    }
+    for (Venue venue : venueList) {
+      MessageCli.VENUE_ENTRY.printMessage(
+          venue.getName(),
+          venue.getCode(),
+          Integer.toString(venue.getCapacity()),
+          Integer.toString(venue.getHireFee()));
     }
   }
 
   public class Venue {
-
     private String venueName;
     private String venueCode;
     private int capacity;
     private int hireFee;
+
+    public Venue(String VenueName, String VenueCode, int Capacity, int HireFee) {
+      this.venueName = VenueName;
+      this.venueCode = VenueCode;
+      this.capacity = Capacity;
+      this.hireFee = HireFee;
+    }
+
+    public String getName() {
+      return venueName;
+    }
+
+    public String getCode() {
+      return venueCode;
+    }
+
+    public int getCapacity() {
+      return capacity;
+    }
+
+    public int getHireFee() {
+      return hireFee;
+    }
   }
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    Venue Venue = new Venue();
-    Venue.venueName = venueName;
-    Venue.venueCode = venueCode;
 
     if (venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
@@ -72,8 +92,13 @@ public class VenueHireSystem {
         return;
       }
       codeList.add(venueCode);
-      Venue.capacity = Integer.parseInt(capacityInput);
-      Venue.hireFee = Integer.parseInt(hireFeeInput);
+      Venue venue =
+          new Venue(
+              venueName,
+              venueCode,
+              Integer.parseInt(capacityInput),
+              Integer.parseInt(hireFeeInput));
+      venueList.add(venue);
       MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
     }
   }
