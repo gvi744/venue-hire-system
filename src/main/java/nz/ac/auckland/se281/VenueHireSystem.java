@@ -13,6 +13,7 @@ public class VenueHireSystem {
   private int capacity;
   private int hireFee;
   private ArrayList<String> codeList = new ArrayList<String>();
+  private ArrayList<Venue> venueList = new ArrayList<>();
 
   public VenueHireSystem() {}
 
@@ -41,17 +42,25 @@ public class VenueHireSystem {
     }
   }
 
+  public class Venue {
+
+    private String venueName;
+    private String venueCode;
+    private int capacity;
+    private int hireFee;
+  }
+
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    this.venueName = venueName;
-    this.venueCode = venueCode;
-    this.capacity = Integer.parseInt(capacityInput);
+    Venue Venue = new Venue();
+    Venue.venueName = venueName;
+    Venue.venueCode = venueCode;
 
     if (venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
     } else if (codeList.contains(venueCode)) {
       MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venueName);
-    } else if (this.capacity < 0) {
+    } else if (Integer.parseInt(capacityInput) < 0) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
     } else {
       if (!isInteger(hireFeeInput)) {
@@ -63,8 +72,9 @@ public class VenueHireSystem {
         return;
       }
       codeList.add(venueCode);
-      this.hireFee = Integer.parseInt(hireFeeInput);
-      MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(this.venueName, this.venueCode);
+      Venue.capacity = Integer.parseInt(capacityInput);
+      Venue.hireFee = Integer.parseInt(hireFeeInput);
+      MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
     }
   }
 
