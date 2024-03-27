@@ -17,7 +17,28 @@ public class VenueHireSystem {
   public VenueHireSystem() {}
 
   public void printVenues() {
-    MessageCli.NO_VENUES.printMessage();
+    if (codeList.size() == 0) {
+      MessageCli.NO_VENUES.printMessage();
+    } else if (codeList.size() == 1) {
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+      MessageCli.VENUE_ENTRY.printMessage(
+          venueName, venueCode, Integer.toString(capacity), Integer.toString(hireFee));
+    } else if (codeList.size() > 1 && codeList.size() < 10) {
+      MessageCli.NUMBER_VENUES.printMessage("are", NumberToWord(codeList.size()), "s");
+      for (int i = 0; i < codeList.size(); i++) {
+        MessageCli.VENUE_ENTRY.printMessage(
+            venueName, venueCode, Integer.toString(capacity), Integer.toString(hireFee));
+      }
+    } else {
+      MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(codeList.size()), "s");
+      for (String venueCode : codeList) {
+        MessageCli.VENUE_ENTRY.printMessage(
+            this.venueName,
+            this.venueCode,
+            Integer.toString(this.capacity),
+            Integer.toString(this.hireFee));
+      }
+    }
   }
 
   public void createVenue(
@@ -25,7 +46,6 @@ public class VenueHireSystem {
     this.venueName = venueName;
     this.venueCode = venueCode;
     this.capacity = Integer.parseInt(capacityInput);
-    int hireFee;
 
     if (venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
@@ -43,7 +63,7 @@ public class VenueHireSystem {
         return;
       }
       codeList.add(venueCode);
-      hireFee = Integer.parseInt(hireFeeInput);
+      this.hireFee = Integer.parseInt(hireFeeInput);
       MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(this.venueName, this.venueCode);
     }
   }
@@ -54,6 +74,15 @@ public class VenueHireSystem {
       return true;
     } catch (NumberFormatException e) {
       return false;
+    }
+  }
+
+  public String NumberToWord(int number) {
+    String[] words = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    if (number > 1 && number <= 9) {
+      return words[number - 1];
+    } else {
+      throw new IllegalArgumentException("Number must be between 2 and 9 (inclusive).");
     }
   }
 
