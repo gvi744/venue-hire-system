@@ -82,8 +82,19 @@ public class VenueHireSystem {
     if (venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
     } else if (codeList.contains(venueCode)) {
-      // Check if venue code already exists in the list
+      // Check if venue code already exists in the list and if so go through venue list and get
+      // appropriate name
+      for (Venue venueObject : venueList) {
+        if (venueObject.getCode().equals(venueCode)) {
+          venueName = venueObject.getName();
+        }
+      }
       MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venueName);
+    } else if (!isInteger(capacityInput)) {
+      // Using custom class defined underneath, check if capacity is able to be converted to an
+      // integer
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
+      return;
     } else if (Integer.parseInt(capacityInput) < 0) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
     } else {
@@ -93,7 +104,7 @@ public class VenueHireSystem {
         MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
         return;
       }
-      if (Integer.parseInt(hireFeeInput) == 0) {
+      if (Integer.parseInt(hireFeeInput) <= 0) {
         MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
         return;
       }
