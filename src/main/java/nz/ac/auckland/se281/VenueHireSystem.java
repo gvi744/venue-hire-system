@@ -110,13 +110,13 @@ public class VenueHireSystem {
       }
       // Create venue where appropriate assuming all input parameters are of desired quality
       codeList.add(venueCode);
-      Venue venue =
+      Venue newVenue =
           new Venue(
               venueName,
               venueCode,
               Integer.parseInt(capacityInput),
               Integer.parseInt(hireFeeInput));
-      venueList.add(venue);
+      venueList.add(newVenue);
       MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
     }
   }
