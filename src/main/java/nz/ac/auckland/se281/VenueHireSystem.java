@@ -8,10 +8,6 @@ import nz.ac.auckland.se281.Types.FloralType;
 public class VenueHireSystem {
 
   // Declaration of instance variables
-  private String venueName;
-  private String venueCode;
-  private int capacity;
-  private int hireFee;
   private ArrayList<String> codeList = new ArrayList<String>();
   private ArrayList<Venue> venueList = new ArrayList<>();
 
@@ -45,37 +41,6 @@ public class VenueHireSystem {
     }
   }
 
-  public class Venue {
-    private String venueName;
-    private String venueCode;
-    private int capacity;
-    private int hireFee;
-
-    public Venue(String VenueName, String VenueCode, int Capacity, int HireFee) {
-      this.venueName = VenueName;
-      this.venueCode = VenueCode;
-      this.capacity = Capacity;
-      this.hireFee = HireFee;
-    }
-
-    // Getters for the venue class
-    public String getName() {
-      return venueName;
-    }
-
-    public String getCode() {
-      return venueCode;
-    }
-
-    public int getCapacity() {
-      return capacity;
-    }
-
-    public int getHireFee() {
-      return hireFee;
-    }
-  }
-
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
     // Custom handling for input parameters per specification
@@ -84,9 +49,9 @@ public class VenueHireSystem {
     } else if (codeList.contains(venueCode)) {
       // Check if venue code already exists in the list and if so go through venue list and get
       // appropriate name
-      for (Venue venueObject : venueList) {
-        if (venueObject.getCode().equals(venueCode)) {
-          venueName = venueObject.getName();
+      for (Venue venue : venueList) {
+        if (venue.getCode().equals(venueCode)) {
+          venueName = venue.getName();
         }
       }
       MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venueName);
