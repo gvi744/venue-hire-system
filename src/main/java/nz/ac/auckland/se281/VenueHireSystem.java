@@ -10,6 +10,7 @@ public class VenueHireSystem {
   // Declaration of instance variables
   private ArrayList<String> codeList = new ArrayList<String>();
   private ArrayList<Venue> venueList = new ArrayList<>();
+  private String CurrentDate;
 
   public VenueHireSystem() {}
 
@@ -111,11 +112,16 @@ public class VenueHireSystem {
   }
 
   public void setSystemDate(String dateInput) {
-    // TODO implement this method
+    CurrentDate = dateInput;
+    MessageCli.DATE_SET.printMessage(dateInput);
   }
 
   public void printSystemDate() {
-    // TODO implement this method
+    if (CurrentDate == null) {
+      MessageCli.CURRENT_DATE.printMessage("not set");
+    } else {
+      MessageCli.CURRENT_DATE.printMessage(CurrentDate);
+    }
   }
 
   public void makeBooking(String[] options) {
