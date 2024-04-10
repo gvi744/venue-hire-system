@@ -17,16 +17,24 @@ public class VenueHireSystem {
   public void printVenues() {
     if (codeList.size() <= 0) {
       MessageCli.NO_VENUES.printMessage();
-    } else if (venueList.size() == 1) {
+    }
+
+    /*  Grab next available date
+    System.out.println(nextAvailableDate);
+    */
+    String nextAvailableDate = null;
+
+    if (venueList.size() == 1) {
       // Grab the values for the one venue instance
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-      for (Venue venue : venueList) {
-        MessageCli.VENUE_ENTRY.printMessage(
-            venue.getName(),
-            venue.getCode(),
-            Integer.toString(venue.getCapacity()),
-            Integer.toString(venue.getHireFee()));
-      }
+      Venue venue = venueList.get(0);
+      nextAvailableDate = venue.nextAvailabeDate(CurrentDate);
+      MessageCli.VENUE_ENTRY.printMessage(
+          venue.getName(),
+          venue.getCode(),
+          Integer.toString(venue.getCapacity()),
+          Integer.toString(venue.getHireFee()),
+          nextAvailableDate);
     } else if (codeList.size() > 1 && codeList.size() < 10) {
       MessageCli.NUMBER_VENUES.printMessage("are", NumberToWord(codeList.size()), "s");
     } else {
@@ -34,11 +42,13 @@ public class VenueHireSystem {
     }
     // Assuming that the venue list is greater than one, print all instances of venues
     for (Venue venue : venueList) {
+      nextAvailableDate = venue.nextAvailabeDate(CurrentDate);
       MessageCli.VENUE_ENTRY.printMessage(
           venue.getName(),
           venue.getCode(),
           Integer.toString(venue.getCapacity()),
-          Integer.toString(venue.getHireFee()));
+          Integer.toString(venue.getHireFee()),
+          nextAvailableDate);
     }
   }
 

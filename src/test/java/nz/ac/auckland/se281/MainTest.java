@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
   MainTest.Task1.class,
   MainTest.Task2.class,
   // MainTest.Task3.class,
-  // MainTest.YourTests.class, // Uncomment this line to run your own tests
+  MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
 
@@ -710,6 +710,12 @@ public class MainTest {
 
     @Test
     public void T4_01_add_your_own_tests_as_needed() throws Exception {
+      runCommands(PRINT_VENUES);
+      assertContains("There are no venues in the system. Please create a venue first.");
+    }
+
+    @Test
+    public void T4_02() throws Exception {
       runCommands(PRINT_VENUES);
       assertContains("There are no venues in the system. Please create a venue first.");
     }

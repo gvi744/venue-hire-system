@@ -41,4 +41,33 @@ public class Venue {
   public void addBooking(String date) {
     Bookings.add(date);
   }
+
+  public String nextAvailabeDate(String CurrentDate) {
+
+    String[] dateParts = CurrentDate.split("/");
+    Integer day = Integer.parseInt(dateParts[0]);
+    Integer month = Integer.parseInt(dateParts[1]);
+    Integer year = Integer.parseInt(dateParts[2]);
+
+    for (String bookingDate : Bookings) {
+      String[] bookingParts = bookingDate.split("/");
+      Integer bookingDay = Integer.parseInt(bookingParts[0]);
+      Integer bookingMonth = Integer.parseInt(bookingParts[1]);
+      Integer bookingYear = Integer.parseInt(bookingParts[2]);
+
+      if (bookingYear < year) {
+        continue;
+      } else if (bookingMonth < month) {
+        continue;
+      } else if (bookingDay < day) {
+        continue;
+      } else if (bookingDay == day) {
+        day++;
+      } else {
+        return String.format("%02d/%02d/%d", bookingDay + 1, month, year);
+      }
+    }
+
+    return String.format("%02d/%02d/%d", day, month, year);
+  }
 }
