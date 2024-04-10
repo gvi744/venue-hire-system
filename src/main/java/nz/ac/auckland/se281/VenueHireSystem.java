@@ -132,6 +132,7 @@ public class VenueHireSystem {
     } else {
 
       String venueName = null;
+      Integer venueCapacity = 0;
 
       for (Venue venue : venueList) {
         if (!venue.getCode().contains(options[0])) {
@@ -139,6 +140,7 @@ public class VenueHireSystem {
         }
         if (venue.getCode() == options[0]) {
           venueName = venue.getName();
+          venueCapacity = venue.getCapacity();
         }
       }
 
@@ -165,6 +167,16 @@ public class VenueHireSystem {
         MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(, );
       }
       */
+
+      // Adjusting number of attendees
+
+      if (Integer.parseInt(options[3]) < (venueCapacity / 4)) {
+        MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+            options[3], Integer.toString((venueCapacity / 4)), Integer.toString(venueCapacity));
+      } else if (Integer.parseInt(options[3]) > venueCapacity) {
+        MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+            options[3], Integer.toString(venueCapacity), Integer.toString(venueCapacity));
+      }
 
       Booking booking = new Booking(options);
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
