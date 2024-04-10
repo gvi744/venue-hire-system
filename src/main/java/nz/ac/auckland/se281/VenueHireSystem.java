@@ -133,15 +133,21 @@ public class VenueHireSystem {
 
       String venueName = null;
       Integer venueCapacity = 0;
+      Boolean venueFound = false;
 
       for (Venue venue : venueList) {
-        if (!venue.getCode().contains(options[0])) {
-          MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
+        if (venue.getCode().contains(options[0])) {
+          venueFound = true;
         }
-        if (venue.getCode() == options[0]) {
+        if (venue.getCode().equals(options[0])) {
           venueName = venue.getName();
           venueCapacity = venue.getCapacity();
         }
+      }
+
+      if (!venueFound) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
+        return;
       }
 
       String[] dateParts = options[1].split("/");
@@ -169,7 +175,6 @@ public class VenueHireSystem {
       */
 
       // Adjusting number of attendees
-
       if (Integer.parseInt(options[3]) < (venueCapacity / 4)) {
         MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
             options[3], Integer.toString((venueCapacity / 4)), Integer.toString(venueCapacity));
@@ -178,7 +183,7 @@ public class VenueHireSystem {
             options[3], Integer.toString(venueCapacity), Integer.toString(venueCapacity));
       }
 
-      Booking booking = new Booking(options);
+      // Booking booking = new Booking(options);
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
           BookingReferenceGenerator.generateBookingReference(), venueName, options[1], options[3]);
     }
