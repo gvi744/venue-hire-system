@@ -125,7 +125,51 @@ public class VenueHireSystem {
   }
 
   public void makeBooking(String[] options) {
-    // TODO implement this method
+    if (CurrentDate == null) {
+      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+    } else if (venueList.size() == 0) {
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+    } else {
+
+      String venueName = null;
+
+      for (Venue venue : venueList) {
+        if (!venue.getCode().contains(options[0])) {
+          MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
+        }
+        if (venue.getCode() == options[0]) {
+          venueName = venue.getName();
+        }
+      }
+
+      String[] dateParts = options[1].split("/");
+      String[] currentDateParts = CurrentDate.split("/");
+
+      Integer bookingDay = Integer.parseInt(dateParts[0]);
+      Integer bookingMonth = Integer.parseInt(dateParts[1]);
+      Integer bookingYear = Integer.parseInt(dateParts[2]);
+      Integer Day = Integer.parseInt(currentDateParts[0]);
+      Integer Month = Integer.parseInt(currentDateParts[1]);
+      Integer Year = Integer.parseInt(currentDateParts[2]);
+
+      if (bookingYear < Year) {
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
+      } else if (bookingMonth < Month) {
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
+      } else if (bookingDay < Day) {
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
+      }
+
+      /*
+      if ( available on the spec date) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(, );
+      }
+      */
+
+      Booking booking = new Booking(options);
+      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
+          BookingReferenceGenerator.generateBookingReference(), venueName, options[1], options[3]);
+    }
   }
 
   public void printBookings(String venueCode) {
