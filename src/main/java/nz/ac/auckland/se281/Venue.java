@@ -44,6 +44,10 @@ public class Venue {
 
   public String nextAvailabeDate(String CurrentDate) {
 
+    if (CurrentDate.isEmpty()) {
+      return "";
+    }
+
     String[] dateParts = CurrentDate.split("/");
     Integer day = Integer.parseInt(dateParts[0]);
     Integer month = Integer.parseInt(dateParts[1]);

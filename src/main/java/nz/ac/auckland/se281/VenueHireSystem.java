@@ -10,7 +10,7 @@ public class VenueHireSystem {
   // Declaration of instance variables
   private ArrayList<String> codeList = new ArrayList<String>();
   private ArrayList<Venue> venueList = new ArrayList<>();
-  private String CurrentDate;
+  private String CurrentDate = "";
 
   public VenueHireSystem() {}
 
@@ -19,10 +19,7 @@ public class VenueHireSystem {
       MessageCli.NO_VENUES.printMessage();
     }
 
-    /*  Grab next available date
-    System.out.println(nextAvailableDate);
-    */
-    String nextAvailableDate = null;
+    String nextAvailableDate = "";
 
     if (venueList.size() == 1) {
       // Grab the values for the one venue instance
@@ -127,7 +124,7 @@ public class VenueHireSystem {
   }
 
   public void printSystemDate() {
-    if (CurrentDate == null) {
+    if (CurrentDate.isEmpty()) {
       MessageCli.CURRENT_DATE.printMessage("not set");
     } else {
       MessageCli.CURRENT_DATE.printMessage(CurrentDate);
@@ -135,7 +132,7 @@ public class VenueHireSystem {
   }
 
   public void makeBooking(String[] options) {
-    if (CurrentDate == null) {
+    if (CurrentDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
     } else if (venueList.size() == 0) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
