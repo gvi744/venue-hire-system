@@ -143,6 +143,11 @@ public class VenueHireSystem {
           venueName = venue.getName();
           venueCapacity = venue.getCapacity();
         }
+        // Checking if already venue is already booked
+        if (venue.checkBooking(options[1])) {
+          MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(venueName, options[1]);
+          return;
+        }
       }
 
       if (!venueFound) {
@@ -168,12 +173,6 @@ public class VenueHireSystem {
         MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
       }
 
-      /*
-      if ( available on the spec date) {
-        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(, );
-      }
-      */
-
       // Adjusting number of attendees
       if (Integer.parseInt(options[3]) < (venueCapacity / 4)) {
         MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
@@ -186,6 +185,12 @@ public class VenueHireSystem {
       // Booking booking = new Booking(options);
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
           BookingReferenceGenerator.generateBookingReference(), venueName, options[1], options[3]);
+      // Make sure to tell venue that it has been booked on that date
+      for (Venue venue : venueList) {
+        if (venue.getName().equals(venueName)) {
+          venue.addBooking(options[1]);
+        }
+      }
     }
   }
 
