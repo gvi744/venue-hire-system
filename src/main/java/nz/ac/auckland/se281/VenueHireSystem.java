@@ -10,6 +10,7 @@ public class VenueHireSystem {
   // Declaration of instance variables
   private ArrayList<String> codeList = new ArrayList<String>();
   private ArrayList<Venue> venueList = new ArrayList<>();
+  private ArrayList<String> referenceList = new ArrayList<>();
   private String CurrentDate = "";
 
   public VenueHireSystem() {}
@@ -191,6 +192,7 @@ public class VenueHireSystem {
 
       // Seperate String to only generate Reference once per new Booking
       String Reference = BookingReferenceGenerator.generateBookingReference();
+      referenceList.add(Reference);
       // Make sure to tell venue that it has been booked on that date
       for (Venue venue : venueList) {
         if (venue.getName().equals(venueName)) {
@@ -214,7 +216,12 @@ public class VenueHireSystem {
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO implement this method
+    if (referenceList.contains(bookingReference)) {
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+          "Catering (" + cateringType.getName() + ")", bookingReference);
+    } else {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
+    }
   }
 
   public void addServiceMusic(String bookingReference) {
