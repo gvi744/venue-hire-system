@@ -189,20 +189,27 @@ public class VenueHireSystem {
             options[3], Integer.toString(venueCapacity), Integer.toString(venueCapacity));
       }
 
+      // Seperate String to only generate Reference once per new Booking
+      String Reference = BookingReferenceGenerator.generateBookingReference();
       // Make sure to tell venue that it has been booked on that date
       for (Venue venue : venueList) {
         if (venue.getName().equals(venueName)) {
-          venue.addBooking(options);
+          venue.addBooking(options, Reference);
         }
       }
-      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-          BookingReferenceGenerator.generateBookingReference(), venueName, options[1], options[3]);
+      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(Reference, venueName, options[1], options[3]);
     }
   }
 
   public void printBookings(String venueCode) {
-    for (Venue venue : venueList) {
-      // venue.printBookings();
+    if (!codeList.contains(venueCode)) {
+      MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+    } else {
+      for (Venue venue : venueList) {
+        if (venue.getCode().equals(venueCode)) {
+          venue.printBookings();
+        }
+      }
     }
   }
 

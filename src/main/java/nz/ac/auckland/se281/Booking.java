@@ -7,11 +7,12 @@ public class Booking {
   private String Email;
   private int attendeeCount;
 
-  public Booking(String[] options) {
+  public Booking(String[] options, String reference) {
     this.VenueCode = options[0];
     this.BookingDate = options[1];
     this.Email = options[2];
     this.attendeeCount = Integer.parseInt(options[3]);
+    this.Reference = reference;
   }
 
   public String getVenueCode() {

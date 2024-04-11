@@ -43,8 +43,8 @@ public class Venue {
     return false;
   }
 
-  public void addBooking(String[] options) {
-    Booking newBooking = new Booking(options);
+  public void addBooking(String[] options, String reference) {
+    Booking newBooking = new Booking(options, reference);
     BookingsList.add(newBooking);
   }
 
@@ -82,5 +82,17 @@ public class Venue {
     }
 
     return String.format("%02d/%02d/%d", day, month, year);
+  }
+
+  public void printBookings() {
+    MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venueName);
+    if (BookingsList.size() <= 0) {
+      MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueName);
+    } else {
+      for (Booking booking : BookingsList) {
+        String temp1 = booking.getReference();
+        MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(temp1, booking.getBookingDate());
+      }
+    }
   }
 }
