@@ -8,7 +8,7 @@ public class Venue {
   private String venueCode;
   private int capacity;
   private int hireFee;
-  private ArrayList<String> Bookings = new ArrayList<>();
+  private ArrayList<Booking> BookingsList = new ArrayList<>();
 
   public Venue(String VenueName, String VenueCode, int Capacity, int HireFee) {
     this.venueName = VenueName;
@@ -35,11 +35,17 @@ public class Venue {
   }
 
   public Boolean checkBooking(String date) {
-    return Bookings.contains(date);
+    for (Booking booking : BookingsList) {
+      if (booking.getBookingDate().equals(date)) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  public void addBooking(String date) {
-    Bookings.add(date);
+  public void addBooking(String[] options) {
+    Booking newBooking = new Booking(options);
+    BookingsList.add(newBooking);
   }
 
   public String nextAvailabeDate(String CurrentDate) {
@@ -52,8 +58,11 @@ public class Venue {
     Integer day = Integer.parseInt(dateParts[0]);
     Integer month = Integer.parseInt(dateParts[1]);
     Integer year = Integer.parseInt(dateParts[2]);
+    String bookingDate;
 
-    for (String bookingDate : Bookings) {
+    for (Booking booking : BookingsList) {
+      bookingDate = booking.getBookingDate();
+
       String[] bookingParts = bookingDate.split("/");
       Integer bookingDay = Integer.parseInt(bookingParts[0]);
       Integer bookingMonth = Integer.parseInt(bookingParts[1]);

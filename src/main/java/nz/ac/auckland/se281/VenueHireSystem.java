@@ -189,20 +189,21 @@ public class VenueHireSystem {
             options[3], Integer.toString(venueCapacity), Integer.toString(venueCapacity));
       }
 
-      // Booking booking = new Booking(options);
-      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-          BookingReferenceGenerator.generateBookingReference(), venueName, options[1], options[3]);
       // Make sure to tell venue that it has been booked on that date
       for (Venue venue : venueList) {
         if (venue.getName().equals(venueName)) {
-          venue.addBooking(options[1]);
+          venue.addBooking(options);
         }
       }
+      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
+          BookingReferenceGenerator.generateBookingReference(), venueName, options[1], options[3]);
     }
   }
 
   public void printBookings(String venueCode) {
-    // TODO implement this method
+    for (Venue venue : venueList) {
+      // venue.printBookings();
+    }
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
