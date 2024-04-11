@@ -1107,6 +1107,18 @@ public class MainTest {
       assertContains("Nothing to print: there is no venue with code 'GGG'.");
       assertDoesNotContain("No bookings for 'Grand Gala Gardens'", true);
     }
+
+    @Test
+    public void T3_15_invoice_details_show_customer_emails() throws Exception {
+      runCommands(
+          SET_DATE,
+          "26/02/2024", //
+          VIEW_INVOICE,
+          "ZP4HRCZ4");
+
+      assertContains(
+          "Invoice not printed: there is no booking with reference 'ZP4HRCZ4' in the system.");
+    }
   }
 
   private static final Object[] CREATE_NINE_VENUES =
