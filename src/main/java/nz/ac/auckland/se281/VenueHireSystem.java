@@ -10,7 +10,7 @@ public class VenueHireSystem {
   // Declaration of instance variables
   private ArrayList<String> codeList = new ArrayList<String>();
   private ArrayList<Venue> venueList = new ArrayList<>();
-  private ArrayList<String> referenceList = new ArrayList<>();
+  private ArrayList<String> referenceList = new ArrayList<String>();
   private String CurrentDate = "";
 
   private String Catering;
@@ -186,19 +186,24 @@ public class VenueHireSystem {
 
       if (bookingYear < Year) {
         MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
+        return;
       } else if (bookingMonth < Month) {
         MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
+        return;
       } else if (bookingDay < Day) {
         MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
+        return;
       }
 
       // Adjusting number of attendees
       if (Integer.parseInt(options[3]) < (venueCapacity / 4)) {
         MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
             options[3], Integer.toString((venueCapacity / 4)), Integer.toString(venueCapacity));
+        options[3] = Integer.toString(venueCapacity / 4);
       } else if (Integer.parseInt(options[3]) > venueCapacity) {
         MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
             options[3], Integer.toString(venueCapacity), Integer.toString(venueCapacity));
+        options[3] = Integer.toString(venueCapacity);
       }
 
       // Seperate String to only generate Reference once per new Booking

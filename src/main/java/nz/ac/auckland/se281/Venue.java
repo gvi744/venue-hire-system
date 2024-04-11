@@ -76,6 +76,8 @@ public class Venue {
         continue;
       } else if (bookingDay == day) {
         day++;
+      } else if (bookingDay > (day + 1)) {
+        return String.format("%02d/%02d/%d", day, month, year);
       } else {
         return String.format("%02d/%02d/%d", bookingDay + 1, month, year);
       }
