@@ -95,4 +95,27 @@ public class Venue {
       }
     }
   }
+
+  public String[] getBookingReference(String reference) {
+    String[] options = new String[5];
+    for (Booking booking : BookingsList) {
+      if (booking.getReference().equals(reference)) {
+        options[0] = booking.getBookingDate();
+        options[1] = booking.getEmail();
+        options[2] = booking.getReference();
+        options[3] = booking.getVenueCode();
+        options[4] = Integer.toString(booking.getAttendeeCount());
+      }
+    }
+    return options;
+  }
+
+  public Boolean checkReference(String reference) {
+    for (Booking booking : BookingsList) {
+      if (booking.getReference().equals(reference)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

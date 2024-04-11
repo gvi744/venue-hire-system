@@ -13,6 +13,17 @@ public class VenueHireSystem {
   private ArrayList<String> referenceList = new ArrayList<>();
   private String CurrentDate = "";
 
+  private String Catering;
+  private Boolean CateringOrder = false;
+  private Integer CateringCost = 0;
+
+  private Boolean Music = false;
+  private Integer MusicCost = 0;
+
+  private String Floral;
+  private Boolean FloralOrder = false;
+  private Integer FloralCost = 0;
+
   public VenueHireSystem() {}
 
   public void printVenues() {
@@ -217,6 +228,9 @@ public class VenueHireSystem {
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     if (referenceList.contains(bookingReference)) {
+      Catering = cateringType.getName();
+      CateringCost = cateringType.getCostPerPerson();
+      CateringOrder = true;
       MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
           "Catering (" + cateringType.getName() + ")", bookingReference);
     } else {
@@ -226,6 +240,8 @@ public class VenueHireSystem {
 
   public void addServiceMusic(String bookingReference) {
     if (referenceList.contains(bookingReference)) {
+      Music = true;
+      MusicCost = 500;
       MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
     } else {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
@@ -234,6 +250,9 @@ public class VenueHireSystem {
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
     if (referenceList.contains(bookingReference)) {
+      Floral = floralType.getName();
+      FloralOrder = true;
+      FloralCost = floralType.getCost();
       MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
           "Floral (" + floralType.getName() + ")", bookingReference);
     } else {
@@ -242,6 +261,43 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
-    // TODO implement this method
+    String options[] = new String[5];
+
+    if (referenceList.contains(bookingReference)) {
+
+      for (Venue venue : venueList) {
+        if (venue.checkReference(bookingReference)) {
+          options = venue.getBookingReference(bookingReference);
+
+          MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
+              bookingReference, options[1], CurrentDate, options[0], options[4], venue.getName());
+
+          MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(Integer.toString(venue.getHireFee()));
+
+          if (CateringOrder) {
+            MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
+                Catering, Integer.toString(CateringCost * Integer.parseInt(options[4])));
+          }
+          if (Music) {
+            MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage("500");
+          }
+          if (FloralOrder) {
+            MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
+                Floral, Integer.toString(FloralCost));
+          }
+
+          String totalCost =
+              Integer.toString(
+                  venue.getHireFee()
+                      + (CateringCost * Integer.parseInt(options[4]))
+                      + MusicCost
+                      + FloralCost);
+          MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(totalCost);
+        }
+      }
+
+    } else {
+      MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+    }
   }
 }
