@@ -225,11 +225,20 @@ public class VenueHireSystem {
   }
 
   public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
+    if (referenceList.contains(bookingReference)) {
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
+    } else {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
+    }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
+    if (referenceList.contains(bookingReference)) {
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+          "Floral (" + floralType.getName() + ")", bookingReference);
+    } else {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
+    }
   }
 
   public void viewInvoice(String bookingReference) {
