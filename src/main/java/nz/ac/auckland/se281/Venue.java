@@ -120,4 +120,8 @@ public class Venue {
     }
     return false;
   }
+
+  public ArrayList<Booking> getBookings() {
+    return BookingsList;
+  }
 }

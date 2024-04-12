@@ -244,13 +244,20 @@ public class VenueHireSystem {
   }
 
   public void addServiceMusic(String bookingReference) {
-    if (referenceList.contains(bookingReference)) {
-      Music = true;
-      MusicCost = 500;
-      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
-    } else {
-      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
+    for (Venue venue : venueList) {
+      if (venue.checkReference(bookingReference)) {
+        Music musicService = new Music(500);
+        ArrayList<Booking> retrivedBookings = venue.getBookings();
+        for (Booking booking : retrivedBookings) {
+          if (booking.getReference().equals(bookingReference)) {
+            booking.addService(musicService);
+          }
+        }
+        MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
+        return;
+      }
     }
+    MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
@@ -283,8 +290,18 @@ public class VenueHireSystem {
             MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
                 Catering, Integer.toString(CateringCost * Integer.parseInt(options[4])));
           }
-          if (Music) {
-            MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage("500");
+          ArrayList<Booking> bookingList = venue.getBookings();
+          for (Booking booking : bookingList) {
+            if (booking.getReference().equals(bookingReference)) {
+              ArrayList<Service> serviceList = booking.getServices();
+              for (Service service : serviceList) {
+                String CostPerPerson = "";
+                if (service instanceof Music) {
+                  CostPerPerson = Integer.toString(service.getCostPerPerson());
+                }
+                MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(CostPerPerson);
+              }
+            }
           }
           if (FloralOrder) {
             MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
