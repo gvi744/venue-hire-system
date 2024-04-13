@@ -11,7 +11,7 @@ public class VenueHireSystem {
   private ArrayList<String> codeList = new ArrayList<String>();
   private ArrayList<Venue> venueList = new ArrayList<>();
   private ArrayList<String> referenceList = new ArrayList<String>();
-  private String CurrentDate = "";
+  private String currentDate = "";
 
   public VenueHireSystem() {}
 
@@ -26,7 +26,7 @@ public class VenueHireSystem {
       // Grab the values for the one venue instance
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
       Venue venue = venueList.get(0);
-      nextAvailableDate = venue.nextAvailableDate(CurrentDate);
+      nextAvailableDate = venue.nextAvailableDate(currentDate);
       MessageCli.VENUE_ENTRY.printMessage(
           venue.getName(),
           venue.getCode(),
@@ -40,7 +40,7 @@ public class VenueHireSystem {
     }
     // Assuming that the venue list is greater than one, print all instances of venues
     for (Venue venue : venueList) {
-      nextAvailableDate = venue.nextAvailableDate(CurrentDate);
+      nextAvailableDate = venue.nextAvailableDate(currentDate);
       MessageCli.VENUE_ENTRY.printMessage(
           venue.getName(),
           venue.getCode(),
@@ -120,20 +120,20 @@ public class VenueHireSystem {
   }
 
   public void setSystemDate(String dateInput) {
-    CurrentDate = dateInput;
+    currentDate = dateInput;
     MessageCli.DATE_SET.printMessage(dateInput);
   }
 
   public void printSystemDate() {
-    if (CurrentDate.isEmpty()) {
+    if (currentDate.isEmpty()) {
       MessageCli.CURRENT_DATE.printMessage("not set");
     } else {
-      MessageCli.CURRENT_DATE.printMessage(CurrentDate);
+      MessageCli.CURRENT_DATE.printMessage(currentDate);
     }
   }
 
   public void makeBooking(String[] options) {
-    if (CurrentDate.isEmpty()) {
+    if (currentDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
     } else if (venueList.size() == 0) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
@@ -164,23 +164,23 @@ public class VenueHireSystem {
       }
 
       String[] dateParts = options[1].split("/");
-      String[] currentDateParts = CurrentDate.split("/");
+      String[] currentDateParts = currentDate.split("/");
 
       Integer bookingDay = Integer.parseInt(dateParts[0]);
       Integer bookingMonth = Integer.parseInt(dateParts[1]);
       Integer bookingYear = Integer.parseInt(dateParts[2]);
-      Integer Day = Integer.parseInt(currentDateParts[0]);
-      Integer Month = Integer.parseInt(currentDateParts[1]);
-      Integer Year = Integer.parseInt(currentDateParts[2]);
+      Integer day = Integer.parseInt(currentDateParts[0]);
+      Integer month = Integer.parseInt(currentDateParts[1]);
+      Integer year = Integer.parseInt(currentDateParts[2]);
 
-      if (bookingYear < Year) {
-        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
+      if (bookingYear < year) {
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], currentDate);
         return;
-      } else if (bookingMonth < Month) {
-        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
+      } else if (bookingMonth < month) {
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], currentDate);
         return;
-      } else if (bookingDay < Day) {
-        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], CurrentDate);
+      } else if (bookingDay < day) {
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], currentDate);
         return;
       }
 
@@ -196,15 +196,15 @@ public class VenueHireSystem {
       }
 
       // Seperate String to only generate Reference once per new Booking
-      String Reference = BookingReferenceGenerator.generateBookingReference();
-      referenceList.add(Reference);
+      String reference = BookingReferenceGenerator.generateBookingReference();
+      referenceList.add(reference);
       // Make sure to tell venue that it has been booked on that date
       for (Venue venue : venueList) {
         if (venue.getName().equals(venueName)) {
-          venue.addBooking(options, Reference);
+          venue.addBooking(options, reference);
         }
       }
-      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(Reference, venueName, options[1], options[3]);
+      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(reference, venueName, options[1], options[3]);
     }
   }
 
@@ -293,7 +293,7 @@ public class VenueHireSystem {
           Integer totalCost = venue.getHireFee();
 
           MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
-              bookingReference, options[1], CurrentDate, options[0], options[4], venue.getName());
+              bookingReference, options[1], currentDate, options[0], options[4], venue.getName());
 
           MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(Integer.toString(venue.getHireFee()));
 
@@ -307,32 +307,32 @@ public class VenueHireSystem {
 
               for (Service service : serviceList) {
                 // Initialise temp variables so code does not become cluttered
-                String CostPerPerson = "";
-                String CateringTypeOrdered = "";
-                Integer CostOfCatering = 0;
-                String FloralTypeOrdered = "";
+                String costPerPerson = "";
+                String cateringTypeOrdered = "";
+                Integer costOfCatering = 0;
+                String floralTypeOrdered = "";
 
                 if (service instanceof Catering) {
-                  CateringTypeOrdered = service.getCateringType();
+                  cateringTypeOrdered = service.getCateringType();
                   // Multiply cost per person by number of attendees to get total catering fee
-                  CostOfCatering = service.getCostPerPerson() * Integer.parseInt(options[4]);
-                  totalCost += CostOfCatering;
+                  costOfCatering = service.getCostPerPerson() * Integer.parseInt(options[4]);
+                  totalCost += costOfCatering;
                   MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
-                      CateringTypeOrdered, Integer.toString(CostOfCatering));
+                      cateringTypeOrdered, Integer.toString(costOfCatering));
                 }
 
                 if (service instanceof Music) {
-                  CostPerPerson = Integer.toString(service.getCostPerPerson());
+                  costPerPerson = Integer.toString(service.getCostPerPerson());
                   totalCost += service.getCostPerPerson();
-                  MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(CostPerPerson);
+                  MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(costPerPerson);
                 }
 
                 if (service instanceof Floral) {
-                  FloralTypeOrdered = service.getCateringType();
-                  CostPerPerson = Integer.toString(service.getCostPerPerson());
+                  floralTypeOrdered = service.getCateringType();
+                  costPerPerson = Integer.toString(service.getCostPerPerson());
                   totalCost += service.getCostPerPerson();
                   MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
-                      FloralTypeOrdered, CostPerPerson);
+                      floralTypeOrdered, costPerPerson);
                 }
               }
             }
