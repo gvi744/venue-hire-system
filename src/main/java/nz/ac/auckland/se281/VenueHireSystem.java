@@ -334,18 +334,6 @@ public class VenueHireSystem {
             }
           }
 
-          for (Booking booking : retrievedBookings) {
-            if (booking.getReference().equals(bookingReference)) {
-              ArrayList<Service> retrievedServices = new ArrayList<>();
-              for (Service service : retrievedServices) {
-                if (service instanceof Catering) {
-                  totalCost += (service.getCostPerPerson() * Integer.parseInt(options[4]));
-                } else {
-                  totalCost += service.getCostPerPerson();
-                }
-              }
-            }
-          }
           MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(Integer.toString(totalCost));
         }
       }
