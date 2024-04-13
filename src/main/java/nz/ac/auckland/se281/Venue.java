@@ -48,7 +48,7 @@ public class Venue {
     BookingsList.add(newBooking);
   }
 
-  public String nextAvailabeDate(String CurrentDate) {
+  public String nextAvailableDate(String CurrentDate) {
 
     if (CurrentDate.isEmpty()) {
       return "";
@@ -96,18 +96,19 @@ public class Venue {
       MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueName);
     } else {
       for (Booking booking : BookingsList) {
+        // Use temporary variable to store reference for printing
         String temp1 = booking.getReference();
         MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(temp1, booking.getBookingDate());
       }
     }
   }
 
-  // Return all the values of a booking as an array when requested through searching through
-  // appropriate bookings
   public String[] getBookingReference(String reference) {
     String[] options = new String[5];
     for (Booking booking : BookingsList) {
       if (booking.getReference().equals(reference)) {
+        // Return all the values of a booking as an array when requested through searching through
+        // appropriate bookings
         options[0] = booking.getBookingDate();
         options[1] = booking.getEmail();
         options[2] = booking.getReference();

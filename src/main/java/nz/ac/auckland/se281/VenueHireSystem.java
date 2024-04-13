@@ -26,7 +26,7 @@ public class VenueHireSystem {
       // Grab the values for the one venue instance
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
       Venue venue = venueList.get(0);
-      nextAvailableDate = venue.nextAvailabeDate(CurrentDate);
+      nextAvailableDate = venue.nextAvailableDate(CurrentDate);
       MessageCli.VENUE_ENTRY.printMessage(
           venue.getName(),
           venue.getCode(),
@@ -40,7 +40,7 @@ public class VenueHireSystem {
     }
     // Assuming that the venue list is greater than one, print all instances of venues
     for (Venue venue : venueList) {
-      nextAvailableDate = venue.nextAvailabeDate(CurrentDate);
+      nextAvailableDate = venue.nextAvailableDate(CurrentDate);
       MessageCli.VENUE_ENTRY.printMessage(
           venue.getName(),
           venue.getCode(),
