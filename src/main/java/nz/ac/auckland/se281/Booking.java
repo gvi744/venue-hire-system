@@ -3,35 +3,35 @@ package nz.ac.auckland.se281;
 import java.util.ArrayList;
 
 public class Booking {
-  private String VenueCode;
-  private String Reference;
-  private String BookingDate;
-  private String Email;
+  private String venueCode;
+  private String reference;
+  private String bookingDate;
+  private String email;
   private int attendeeCount;
   private ArrayList<Service> serviceList = new ArrayList<>();
 
   public Booking(String[] options, String reference) {
-    this.VenueCode = options[0];
-    this.BookingDate = options[1];
-    this.Email = options[2];
+    this.venueCode = options[0];
+    this.bookingDate = options[1];
+    this.email = options[2];
     this.attendeeCount = Integer.parseInt(options[3]);
-    this.Reference = reference;
+    this.reference = reference;
   }
 
   public String getVenueCode() {
-    return VenueCode;
+    return venueCode;
   }
 
   public String getReference() {
-    return Reference;
+    return reference;
   }
 
   public String getBookingDate() {
-    return BookingDate;
+    return bookingDate;
   }
 
   public String getEmail() {
-    return Email;
+    return email;
   }
 
   public int getAttendeeCount() {

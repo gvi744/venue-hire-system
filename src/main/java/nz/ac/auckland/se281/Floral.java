@@ -2,16 +2,16 @@ package nz.ac.auckland.se281;
 
 public class Floral extends Service {
   // private Types.FloralType FloralTypeOrdered;
-  private String FloralTypeOrdered;
+  private String floralTypeOrdered;
 
-  public Floral(String FloralType, Integer Cost) {
-    super(FloralType, Cost);
-    this.FloralTypeOrdered = FloralType;
+  public Floral(String floralType, Integer cost) {
+    super(floralType, cost);
+    this.floralTypeOrdered = floralType;
   }
 
   @Override
   public String getCateringType() {
-    return FloralTypeOrdered.toString();
+    return floralTypeOrdered.toString();
   }
 
   @Override
