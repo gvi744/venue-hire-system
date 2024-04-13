@@ -220,6 +220,7 @@ public class VenueHireSystem {
     }
   }
 
+  // Adding catering by iterating until proper booking from proper venue
   public void addCateringService(String bookingReference, CateringType cateringType) {
     for (Venue venue : venueList) {
       if (venue.checkReference(bookingReference)) {
@@ -232,6 +233,7 @@ public class VenueHireSystem {
             MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
                 "Catering (" + cateringType.getName() + ")", bookingReference);
             return;
+            // Return to stop iterating through improper venues / references
           }
         }
       }
@@ -239,9 +241,11 @@ public class VenueHireSystem {
     MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
   }
 
+  // Adding music by iterating until proper booking is reached from proper venue
   public void addServiceMusic(String bookingReference) {
     for (Venue venue : venueList) {
       if (venue.checkReference(bookingReference)) {
+        // Music cost is constant at 500 regardless of attendees or type of music
         Music musicService = new Music(500);
         ArrayList<Booking> retrivedBookings = venue.getBookings();
         for (Booking booking : retrivedBookings) {
@@ -256,9 +260,11 @@ public class VenueHireSystem {
     MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
   }
 
+  // Adding Floral Services by iterating through every booking in every venue
   public void addServiceFloral(String bookingReference, FloralType floralType) {
     for (Venue venue : venueList) {
       if (venue.checkReference(bookingReference)) {
+        // Floral cost is dependent on type of floral, not number of attendees
         Floral floralService = new Floral(floralType.getName(), floralType.getCost());
         ArrayList<Booking> retrievedBookings = venue.getBookings();
         for (Booking booking : retrievedBookings) {
@@ -275,6 +281,7 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
+    // Initialising placeholder array for booking details
     String options[] = new String[5];
 
     if (referenceList.contains(bookingReference)) {
