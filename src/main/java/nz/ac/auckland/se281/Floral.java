@@ -16,6 +16,6 @@ public class Floral extends Service {
 
   @Override
   public Integer getCostPerPerson() {
-    return Cost;
+    return cost;
   }
 }

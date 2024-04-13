@@ -15,6 +15,6 @@ public class Catering extends Service {
 
   @Override
   public Integer getCostPerPerson() {
-    return Cost;
+    return cost;
   }
 }
