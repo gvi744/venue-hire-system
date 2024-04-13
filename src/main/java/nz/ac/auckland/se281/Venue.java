@@ -54,12 +54,14 @@ public class Venue {
       return "";
     }
 
+    // String splitting to allow processing of analysis of year/month/day
     String[] dateParts = CurrentDate.split("/");
     Integer day = Integer.parseInt(dateParts[0]);
     Integer month = Integer.parseInt(dateParts[1]);
     Integer year = Integer.parseInt(dateParts[2]);
     String bookingDate;
 
+    // Compare with every booking to ensure that it has not been booked before
     for (Booking booking : BookingsList) {
       bookingDate = booking.getBookingDate();
 
@@ -86,6 +88,8 @@ public class Venue {
     return String.format("%02d/%02d/%d", day, month, year);
   }
 
+  // During development, I did not realise how bookings would be accessible to VenueHireSystem so
+  // this prints bookings of a specific venue directly
   public void printBookings() {
     MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venueName);
     if (BookingsList.size() <= 0) {
@@ -98,6 +102,8 @@ public class Venue {
     }
   }
 
+  // Return all the values of a booking as an array when requested through searching through
+  // appropriate bookings
   public String[] getBookingReference(String reference) {
     String[] options = new String[5];
     for (Booking booking : BookingsList) {
