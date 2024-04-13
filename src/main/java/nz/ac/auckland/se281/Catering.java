@@ -1,16 +1,16 @@
 package nz.ac.auckland.se281;
 
 public class Catering extends Service {
-  private String CateringTypeOrdered;
+  private String cateringTypeOrdered;
 
-  public Catering(String CateringType, Integer Cost) {
-    super(CateringType, Cost);
-    this.CateringTypeOrdered = CateringType;
+  public Catering(String cateringType, Integer cost) {
+    super(cateringType, cost);
+    this.cateringTypeOrdered = cateringType;
   }
 
   @Override
   public String getCateringType() {
-    return CateringTypeOrdered.toString();
+    return cateringTypeOrdered.toString();
   }
 
   @Override
