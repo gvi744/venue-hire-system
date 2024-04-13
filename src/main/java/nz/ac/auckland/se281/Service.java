@@ -13,11 +13,6 @@ public abstract class Service {
     this.Cost = Cost;
   }
 
-  /*
-  public Integer getCostPerPerson() {
-    return Cost;
-  }
-  */
   public abstract Integer getCostPerPerson();
 
   public abstract String getCateringType();

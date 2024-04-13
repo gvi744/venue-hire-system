@@ -11,6 +11,7 @@ public class Music extends Service {
     return Cost;
   }
 
+  @Override
   public String getCateringType() {
     return null;
   }

@@ -257,17 +257,6 @@ public class VenueHireSystem {
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    /*
-    if (referenceList.contains(bookingReference)) {
-      Floral = floralType.getName();
-      FloralOrder = true;
-      FloralCost = floralType.getCost();
-      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
-          "Floral (" + floralType.getName() + ")", bookingReference);
-    } else {
-      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
-    }
-    */
     for (Venue venue : venueList) {
       if (venue.checkReference(bookingReference)) {
         Floral floralService = new Floral(floralType.getName(), floralType.getCost());
@@ -315,7 +304,6 @@ public class VenueHireSystem {
 
                 if (service instanceof Catering) {
                   CateringTypeOrdered = service.getCateringType();
-                  // CostPerPerson = Integer.toString(service.getCostPerPerson());
                   CostOfCatering = service.getCostPerPerson() * Integer.parseInt(options[4]);
                   totalCost += CostOfCatering;
                   MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
@@ -351,14 +339,6 @@ public class VenueHireSystem {
               }
             }
           }
-          /*
-          String totalCost =
-              Integer.toString(
-                  venue.getHireFee()
-                      + (CateringCost * Integer.parseInt(options[4]))
-                      + MusicCost
-                      + FloralCost);
-          */
           MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(Integer.toString(totalCost));
         }
       }
