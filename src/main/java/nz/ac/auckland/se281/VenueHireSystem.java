@@ -34,7 +34,7 @@ public class VenueHireSystem {
           Integer.toString(venue.getHireFee()),
           nextAvailableDate);
     } else if (codeList.size() > 1 && codeList.size() < 10) {
-      MessageCli.NUMBER_VENUES.printMessage("are", NumberToWord(codeList.size()), "s");
+      MessageCli.NUMBER_VENUES.printMessage("are", numberToWord(codeList.size()), "s");
     } else {
       MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(codeList.size()), "s");
     }
@@ -108,7 +108,7 @@ public class VenueHireSystem {
   }
 
   // Custom class to covert number to word when printing number of venues less than ten
-  public String NumberToWord(int number) {
+  public String numberToWord(int number) {
     String[] words = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
     if (number > 1 && number <= 9) {
       // Only returning numbers 2 - 9 because 1 has its separate exception

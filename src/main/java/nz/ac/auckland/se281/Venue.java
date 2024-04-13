@@ -8,13 +8,13 @@ public class Venue {
   private String venueCode;
   private int capacity;
   private int hireFee;
-  private ArrayList<Booking> BookingsList = new ArrayList<>();
+  private ArrayList<Booking> bookingsList = new ArrayList<>();
 
-  public Venue(String VenueName, String VenueCode, int Capacity, int HireFee) {
-    this.venueName = VenueName;
-    this.venueCode = VenueCode;
-    this.capacity = Capacity;
-    this.hireFee = HireFee;
+  public Venue(String venueName, String venueCode, int capacity, int hireFee) {
+    this.venueName = venueName;
+    this.venueCode = venueCode;
+    this.capacity = capacity;
+    this.hireFee = hireFee;
   }
 
   // Getters for the venue class
@@ -35,7 +35,7 @@ public class Venue {
   }
 
   public Boolean checkBooking(String date) {
-    for (Booking booking : BookingsList) {
+    for (Booking booking : bookingsList) {
       if (booking.getBookingDate().equals(date)) {
         return true;
       }
@@ -45,24 +45,24 @@ public class Venue {
 
   public void addBooking(String[] options, String reference) {
     Booking newBooking = new Booking(options, reference);
-    BookingsList.add(newBooking);
+    bookingsList.add(newBooking);
   }
 
-  public String nextAvailableDate(String CurrentDate) {
+  public String nextAvailableDate(String currentDate) {
 
-    if (CurrentDate.isEmpty()) {
+    if (currentDate.isEmpty()) {
       return "";
     }
 
     // String splitting to allow processing of analysis of year/month/day
-    String[] dateParts = CurrentDate.split("/");
+    String[] dateParts = currentDate.split("/");
     Integer day = Integer.parseInt(dateParts[0]);
     Integer month = Integer.parseInt(dateParts[1]);
     Integer year = Integer.parseInt(dateParts[2]);
     String bookingDate;
 
     // Compare with every booking to ensure that it has not been booked before
-    for (Booking booking : BookingsList) {
+    for (Booking booking : bookingsList) {
       bookingDate = booking.getBookingDate();
 
       String[] bookingParts = bookingDate.split("/");
@@ -92,10 +92,10 @@ public class Venue {
   // this prints bookings of a specific venue directly
   public void printBookings() {
     MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venueName);
-    if (BookingsList.size() <= 0) {
+    if (bookingsList.size() <= 0) {
       MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueName);
     } else {
-      for (Booking booking : BookingsList) {
+      for (Booking booking : bookingsList) {
         // Use temporary variable to store reference for printing
         String temp1 = booking.getReference();
         MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(temp1, booking.getBookingDate());
@@ -105,7 +105,7 @@ public class Venue {
 
   public String[] getBookingReference(String reference) {
     String[] options = new String[5];
-    for (Booking booking : BookingsList) {
+    for (Booking booking : bookingsList) {
       if (booking.getReference().equals(reference)) {
         // Return all the values of a booking as an array when requested through searching through
         // appropriate bookings
@@ -120,7 +120,7 @@ public class Venue {
   }
 
   public Boolean checkReference(String reference) {
-    for (Booking booking : BookingsList) {
+    for (Booking booking : bookingsList) {
       if (booking.getReference().equals(reference)) {
         return true;
       }
@@ -129,6 +129,6 @@ public class Venue {
   }
 
   public ArrayList<Booking> getBookings() {
-    return BookingsList;
+    return bookingsList;
   }
 }

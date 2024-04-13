@@ -15,5 +15,4 @@ public class Music extends Service {
   public String getCateringType() {
     return null;
   }
-  ;
 }
