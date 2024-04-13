@@ -288,6 +288,7 @@ public class VenueHireSystem {
 
       for (Venue venue : venueList) {
         if (venue.checkReference(bookingReference)) {
+          // Initaliste totalCost variable and get details from specific booking
           options = venue.getBookingReference(bookingReference);
           Integer totalCost = venue.getHireFee();
 
@@ -296,6 +297,7 @@ public class VenueHireSystem {
 
           MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(Integer.toString(venue.getHireFee()));
 
+          // Get booking list to find specific booking details
           ArrayList<Booking> retrievedBookings = venue.getBookings();
           for (Booking booking : retrievedBookings) {
 
@@ -304,6 +306,7 @@ public class VenueHireSystem {
               ArrayList<Service> serviceList = booking.getServices();
 
               for (Service service : serviceList) {
+                // Initialise temp variables so code does not become cluttered
                 String CostPerPerson = "";
                 String CateringTypeOrdered = "";
                 Integer CostOfCatering = 0;
@@ -311,6 +314,7 @@ public class VenueHireSystem {
 
                 if (service instanceof Catering) {
                   CateringTypeOrdered = service.getCateringType();
+                  // Multiply cost per person by number of attendees to get total catering fee
                   CostOfCatering = service.getCostPerPerson() * Integer.parseInt(options[4]);
                   totalCost += CostOfCatering;
                   MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
