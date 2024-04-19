@@ -1119,6 +1119,38 @@ public class MainTest {
       assertContains(
           "Invoice not printed: there is no booking with reference 'ZP4HRCZ4' in the system.");
     }
+
+    @Test
+    public void T3_15_invoice_show_alllll() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("FFH", "27/07/2024", "client001@email.com", "20"), //
+              MAKE_BOOKING,
+              options("GGG", "28/07/2024", "clientelle002@gmail.com", "260"),
+              ADD_FLORAL,
+              "HUD14D8O",
+              options("y"),
+              ADD_MUSIC,
+              "HUD14D8O",
+              ADD_CATERING,
+              "ZP4HRCZ4",
+              options("B"),
+              VIEW_INVOICE,
+              "HUD14D8O",
+              VIEW_INVOICE,
+              "ZP4HRCZ4"));
+
+      assertContains("Booking Reference: #HUD14D8O");
+      assertContains("Customer Email: client001@email.com");
+      assertContains("Date of Booking: 26/02/2024");
+      assertContains("Party Date: 27/07/2024");
+      assertContains("Number of Guests: 20");
+      assertContains("Venue: Frugal Fiesta Hall");
+    }
   }
 
   private static final Object[] CREATE_NINE_VENUES =
